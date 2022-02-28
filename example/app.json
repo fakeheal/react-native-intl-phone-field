@@ -1,0 +1,22 @@
+{
+  "name": "react-native-intl-phone-field-example",
+  "displayName": "IntlPhoneField Example",
+  "expo": {
+    "name": "react-native-intl-phone-field-example",
+    "slug": "react-native-intl-phone-field-example",
+    "description": "Example app for react-native-intl-phone-field",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
