@@ -6,8 +6,7 @@ import { getEmojiFlag } from 'countries-list';
 const INTL_SYMBOL = '+';
 
 export type IntlPhoneFieldProps = {
-  flagUndetermined: string;
-  placeholder: string;
+  flagUndetermined?: string;
   defaultCountry?: CountryCode;
   defaultPrefix?: string;
   defaultValue?: string;
@@ -52,7 +51,6 @@ export default function IntlPhoneField({
     setValue(`${INTL_SYMBOL}${text.replaceAll(INTL_SYMBOL, '')}`);
   };
 
-  // Attempt parsing the value using Google liphonenumber
   useEffect(() => {
     try {
       const parsed = parsePhoneNumber(value, defaultCountry);
@@ -123,6 +121,7 @@ export default function IntlPhoneField({
             onEndEditing({ isValid, countryCode, value, formatted, flag });
           }
         }}
+        returnKeyType="done"
         {...textInputProps}
       />
     </View>
