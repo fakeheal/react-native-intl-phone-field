@@ -24,7 +24,7 @@ export default function App() {
   const [filled, setFilled] = useState(DEFAULT_STATE);
 
   const onEndEditingMinimal = useCallback(
-    (isValid, countryCode, value, formatted, flag) => {
+    ({isValid, countryCode, value, formatted, flag}) => {
       console.log(
         'onEndEditingMinimal',
         isValid,
@@ -40,7 +40,7 @@ export default function App() {
   );
 
   const onEndEditingDefaultCountry = useCallback(
-    (isValid, countryCode, value, formatted, flag) => {
+    ({isValid, countryCode, value, formatted, flag}) => {
       console.log(
         'onEndEditingDefaultCountry',
         isValid,
@@ -55,7 +55,7 @@ export default function App() {
   );
 
   const onEndEditingFilled = useCallback(
-    (isValid, countryCode, value, formatted, flag) => {
+    ({isValid, countryCode, value, formatted, flag}) => {
       console.log(
         'onEndEditingFilled',
         isValid,

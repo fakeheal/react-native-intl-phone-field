@@ -5,7 +5,7 @@ import { getEmojiFlag } from 'countries-list';
 
 const INTL_SYMBOL = '+';
 
-type IntlPhoneFieldProps = {
+export type IntlPhoneFieldProps = {
   flagUndetermined: string;
   placeholder: string;
   defaultCountry?: CountryCode;
@@ -120,7 +120,7 @@ export default function IntlPhoneField({
         keyboardType="phone-pad"
         onEndEditing={() => {
           if (onEndEditing) {
-            onEndEditing(isValid, countryCode, value, formatted, flag);
+            onEndEditing({ isValid, countryCode, value, formatted, flag });
           }
         }}
         {...textInputProps}
