@@ -5,6 +5,8 @@
 
 React Native text input for validating international phone numbers, built on top of [libphonenumber](https://github.com/google/libphonenumber) by Google using [phonenumber-js](https://gitlab.com/catamphetamine/libphonenumber-js).
 
+<img src="ios.gif" alt="iOS Example App Gif"> <img src="android.gif" alt="Android Example App Gif">
+
 ## 👋 Introduction
 
 A simple `<TextInput>` that validates and formats international phone numbers using Google's library [libphonenumber](https://github.com/google/libphonenumber)  and [phonenumber-js](https://gitlab.com/catamphetamine/libphonenumber-js).  Works with pre-propulated data and displays an emoji flag if country code is derived from the number. Additionally, adds a `+` sign infront of the number, so it's considered international.
