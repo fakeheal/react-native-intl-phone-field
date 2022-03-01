@@ -48,7 +48,7 @@ export default function IntlPhoneField({
   const [countryCode, setCountryCode] = useState<CountryCode | undefined>();
 
   const onChangeText = (text: string) => {
-    setValue(`${INTL_SYMBOL}${text.replaceAll(INTL_SYMBOL, '')}`);
+    setValue(`${INTL_SYMBOL}${text.split(INTL_SYMBOL).join('')}`);
   };
 
   useEffect(() => {
