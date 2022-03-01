@@ -12,7 +12,8 @@ type IntlPhoneFieldProps = {
   defaultPrefix?: string;
   defaultValue?: string;
   defaultFlag?: string;
-  onChange?: Function;
+  onEndEditing?: Function;
+  onValidation?: Function;
   containerStyle?: object;
   flagContainerStyle?: object;
   flagTextStyle?: object;
@@ -24,7 +25,8 @@ let resolveFlagTimeoutId: NodeJS.Timeout;
 
 export default function IntlPhoneField({
   flagUndetermined = '❓',
-  onChange,
+  onEndEditing,
+  onValidation,
   defaultCountry,
   defaultPrefix,
   defaultValue,
@@ -35,7 +37,6 @@ export default function IntlPhoneField({
   textInputStyle,
   textInputProps,
 }: IntlPhoneFieldProps) {
-  console.log('test');
   const [flag, setFlag] = useState<string>(defaultFlag ?? flagUndetermined);
 
   const [value, setValue] = useState<string>(
@@ -50,12 +51,6 @@ export default function IntlPhoneField({
   const onChangeText = (text: string) => {
     setValue(`${INTL_SYMBOL}${text.replaceAll(INTL_SYMBOL, '')}`);
   };
-
-  useEffect(() => {
-    if (onChange) {
-      onChange(parsedNumber, isValid, countryCode, value, formatted, flag);
-    }
-  }, [parsedNumber, isValid, countryCode, value, flag, formatted, onChange]);
 
   // Attempt parsing the value using Google liphonenumber
   useEffect(() => {
@@ -97,7 +92,7 @@ export default function IntlPhoneField({
       } else {
         setFlag(flagUndetermined);
       }
-    }, 300);
+    }, 150);
 
     return () => clearTimeout(resolveFlagTimeoutId);
   }, [countryCode, flagUndetermined, defaultFlag, value, defaultPrefix]);
@@ -110,6 +105,9 @@ export default function IntlPhoneField({
     }
   }, [isValid, parsedNumber, value]);
 
+  useEffect(() => {
+    onValidation && onValidation(isValid);
+  }, [onValidation, isValid]);
   return (
     <View style={[styles.container, containerStyle]}>
       <View style={[styles.flag, flagContainerStyle]}>
@@ -120,6 +118,11 @@ export default function IntlPhoneField({
         onChangeText={onChangeText}
         style={[styles.input, textInputStyle]}
         keyboardType="phone-pad"
+        onEndEditing={() => {
+          if (onEndEditing) {
+            onEndEditing(isValid, countryCode, value, formatted, flag);
+          }
+        }}
         {...textInputProps}
       />
     </View>
