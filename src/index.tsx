@@ -35,6 +35,7 @@ export default function IntlPhoneField({
   textInputStyle,
   textInputProps,
 }: IntlPhoneFieldProps) {
+  console.log('test');
   const [flag, setFlag] = useState<string>(defaultFlag ?? flagUndetermined);
 
   const [value, setValue] = useState<string>(

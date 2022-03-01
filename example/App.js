@@ -1,112 +1,178 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import * as React from 'react';
+import {useState} from 'react';
 
-import React from 'react';
-import type {Node} from 'react';
 import {
+  KeyboardAvoidingView,
+  Keyboard,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
+  Pressable,
+  StatusBar,
 } from 'react-native';
+import IntlPhoneField from 'react-native-intl-phone-field';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const DEFAULT_STATE = {
+  isValid: null,
+  countryCode: null,
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+export default function App() {
+  const [minimal, setMinimal] = useState(DEFAULT_STATE);
+  const [defaultCountry, setDefaultCountry] = useState(DEFAULT_STATE);
+  const [filled, setFilled] = useState(DEFAULT_STATE);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const onChangeMinimal = (_, isValid, countryCode, value, formatted, flag) => {
+    console.log(
+      'onChangeMinimal',
+      isValid,
+      countryCode,
+      value,
+      formatted,
+      flag,
+    );
+
+    setMinimal({isValid, countryCode});
   };
 
+  const onChangeDefaultCountry = (
+    _,
+    isValid,
+    countryCode,
+    value,
+    formatted,
+    flag,
+  ) => {
+    console.log(
+      'onChangeDefaultCountry',
+      isValid,
+      countryCode,
+      value,
+      formatted,
+      flag,
+    );
+    setDefaultCountry({isValid, countryCode});
+  };
+  const onChangeFilled = (_, isValid, countryCode, value, formatted, flag) => {
+    console.log('onChangeFilled', isValid, countryCode, value, formatted, flag);
+    setFilled({isValid, countryCode});
+  };
+
+  console.log('test');
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <StatusBar barStyle="dark-content" />
+      <Pressable onPress={() => Keyboard.dismiss()} style={{flex: 1}}>
+        <KeyboardAvoidingView style={{flex: 1}}>
+          <View style={styles.container}>
+            <View style={styles.example}>
+              <Text style={styles.exampleTitle}>Minimal</Text>
+              <IntlPhoneField />
+              <View style={styles.output}>
+                <View style={styles.outputRow}>
+                  <Text style={styles.outputLabel}>Valid?</Text>
+                  <Text style={styles.outputText}>
+                    {minimal.isValid ? 'Valid' : 'Invalid'}
+                  </Text>
+                </View>
+                <View style={styles.outputRow}>
+                  <Text style={styles.outputLabel}>Country Code</Text>
+                  <Text style={styles.outputText}>
+                    {minimal.countryCode ? minimal.countryCode : 'Undefined'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            {/*<View style={styles.example}>*/}
+            {/*  <Text style={styles.exampleTitle}>Default Country + Prefix</Text>*/}
+            {/*  <IntlPhoneField*/}
+            {/*    onChange={onChangeDefaultCountry}*/}
+            {/*    defaultCountry="BG"*/}
+            {/*    defaultPrefix="+359"*/}
+            {/*    defaultFlag="🇧🇬"*/}
+            {/*  />*/}
+            {/*  <View style={styles.output}>*/}
+            {/*    <View style={styles.outputRow}>*/}
+            {/*      <Text style={styles.outputLabel}>Valid?</Text>*/}
+            {/*      <Text style={styles.outputText}>*/}
+            {/*        {defaultCountry.isValid ? 'Valid' : 'Invalid'}*/}
+            {/*      </Text>*/}
+            {/*    </View>*/}
+            {/*    <View style={styles.outputRow}>*/}
+            {/*      <Text style={styles.outputLabel}>Country Code</Text>*/}
+            {/*      <Text style={styles.outputText}>*/}
+            {/*        {defaultCountry.countryCode*/}
+            {/*          ? defaultCountry.countryCode*/}
+            {/*          : 'Undefined'}*/}
+            {/*      </Text>*/}
+            {/*    </View>*/}
+            {/*  </View>*/}
+            {/*</View>*/}
+            {/*<View style={styles.example}>*/}
+            {/*  <Text style={styles.exampleTitle}>Filled + Styles</Text>*/}
+            {/*  <IntlPhoneField*/}
+            {/*    onChange={onChangeFilled}*/}
+            {/*    defaultCountry="BG"*/}
+            {/*    defaultPrefix="+359"*/}
+            {/*    defaultFlag="🇧🇬"*/}
+            {/*    containerStyle={filled.isValid ? styles.valid : styles.invalid}*/}
+            {/*  />*/}
+            {/*  <View style={styles.output}>*/}
+            {/*    <View style={styles.outputRow}>*/}
+            {/*      <Text style={styles.outputLabel}>Valid?</Text>*/}
+            {/*      <Text style={styles.outputText}>*/}
+            {/*        {filled.isValid ? 'Valid' : 'Invalid'}*/}
+            {/*      </Text>*/}
+            {/*    </View>*/}
+            {/*    <View style={styles.outputRow}>*/}
+            {/*      <Text style={styles.outputLabel}>Country Code</Text>*/}
+            {/*      <Text style={styles.outputText}>*/}
+            {/*        {filled.countryCode ? filled.countryCode : 'Undefined'}*/}
+            {/*      </Text>*/}
+            {/*    </View>*/}
+            {/*  </View>*/}
+            {/*</View>*/}
+          </View>
+        </KeyboardAvoidingView>
+      </Pressable>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    padding: 20,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  example: {
+    marginBottom: 20,
+    paddingBottom: 20,
+    borderBottomColor: 'lightgrey',
+    borderBottomWidth: 1,
   },
-  sectionDescription: {
-    marginTop: 8,
+  exampleTitle: {
     fontSize: 18,
-    fontWeight: '400',
+    marginBottom: 15,
+    fontWeight: 'bold',
   },
-  highlight: {
-    fontWeight: '700',
+  valid: {
+    borderBottomColor: 'green',
+  },
+  invalid: {
+    borderBottomColor: 'red',
+  },
+  output: {
+    marginTop: 20,
+  },
+  outputRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  outputLabel: {},
+  outputText: {
+    fontWeight: 'bold',
   },
 });
-
-export default App;
