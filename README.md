@@ -1,13 +1,15 @@
-# react-native-intl-phone-field
 <a href="https://www.npmjs.com/package/react-native-intl-phone-field">
     <img alt="npm (scoped)" src="https://img.shields.io/npm/v/react-native-intl-phone-field?style=flat">
 </a>
+<p align="center">
+  <h2 align="center">React Native Intl Phone Field</h2>
+  <h4 align="center">🌐 RN Text Input Component for International Phone numbers</h4>
+</p>
 
-React Native text input for validating & formatting international phone numbers, built on top of [libphonenumber](https://github.com/google/libphonenumber) by Google using [phonenumber-js](https://gitlab.com/catamphetamine/libphonenumber-js).
 
-<center>
+<p align="center">
 <img src="demo.gif" alt="Demo in action" />
-</center>
+</p>
 
 ## 🕹️ Demo
 
