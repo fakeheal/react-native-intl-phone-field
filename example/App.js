@@ -22,6 +22,7 @@ export default function App() {
   const [minimal, setMinimal] = useState(DEFAULT_STATE);
   const [defaultCountry, setDefaultCountry] = useState(DEFAULT_STATE);
   const [filled, setFilled] = useState(DEFAULT_STATE);
+  const [realTimeValidation, setRealTimeValidation] = useState(false);
 
   const onEndEditingMinimal = useCallback(
     ({isValid, countryCode, value, formatted, flag}) => {
@@ -70,12 +71,8 @@ export default function App() {
   );
 
   const onValidationFilled = useCallback(
-    isValid =>
-      setFilled({
-        ...filled,
-        isValid,
-      }),
-    [filled.countryCode],
+    isValid => setRealTimeValidation(isValid),
+    [],
   );
 
   return (
@@ -136,7 +133,9 @@ export default function App() {
                 defaultCountry="BG"
                 defaultPrefix="+359"
                 defaultFlag="🇧🇬"
-                containerStyle={filled.isValid ? styles.valid : styles.invalid}
+                containerStyle={
+                  realTimeValidation ? styles.valid : styles.invalid
+                }
               />
               <View style={styles.output}>
                 <View style={styles.outputRow}>
