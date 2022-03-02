@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   CountryCode,
   parsePhoneNumberWithError,
@@ -118,7 +118,12 @@ export default function IntlPhoneField({
         style={[styles.input, textInputStyle]}
         keyboardType="phone-pad"
         onEndEditing={() => {
-          if (onEndEditing) {
+          if (onEndEditing && Platform.OS !== 'web') {
+            onEndEditing({ isValid, countryCode, value, formatted, flag });
+          }
+        }}
+        onBlur={() => {
+          if (onEndEditing && Platform.OS === 'web') {
             onEndEditing({ isValid, countryCode, value, formatted, flag });
           }
         }}
