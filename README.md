@@ -1,14 +1,20 @@
-<a href="https://www.npmjs.com/package/react-native-intl-phone-field">
-    <img alt="npm (scoped)" src="https://img.shields.io/npm/v/react-native-intl-phone-field?style=flat">
-</a>
+
 <p align="center">
-  <h2 align="center">React Native Intl Phone Field</h2>
-  <h4 align="center">🌐 RN Text Input Component for International Phone numbers</h4>
+<img src="demo.gif" alt="Demo in action" height='200'/>
 </p>
 
+<h1 align="center">React Native Intl Phone Field</h1>
+<p align='center'>
+ <a href="https://www.npmjs.com/package/react-native-intl-phone-field">
+    <img alt="npm (scoped)" src="https://img.shields.io/npm/v/react-native-intl-phone-field?style=flat">
+    </a>
+</p>
 
-<p align="center">
-<img src="demo.gif" alt="Demo in action" />
+<p align='center'>
+    <a href="https://snack.expo.dev/@fakeheal/react-native-intl-phone-field-demo">
+    Try the Expo Snack 👏
+    </a>
+<br>
 </p>
 
 ## 🕹️ Demo
