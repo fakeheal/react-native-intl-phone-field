@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import parsePhoneNumber, { CountryCode, PhoneNumber } from 'libphonenumber-js';
+import {
+  CountryCode,
+  parsePhoneNumberWithError,
+  PhoneNumber,
+} from 'libphonenumber-js';
 import { getEmojiFlag } from 'countries-list';
 
 const INTL_SYMBOL = '+';
@@ -53,10 +57,7 @@ export default function IntlPhoneField({
 
   useEffect(() => {
     try {
-      const parsed = parsePhoneNumber(value, defaultCountry);
-      if (parsed) {
-        setParsedNumber(parsed);
-      }
+      setParsedNumber(parsePhoneNumberWithError(value, defaultCountry));
     } catch (e) {
       setParsedNumber(null);
     }
