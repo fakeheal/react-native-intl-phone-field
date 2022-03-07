@@ -1,6 +1,6 @@
 {
   "name": "react-native-intl-phone-field",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React Native input for validating international phone numbers.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
