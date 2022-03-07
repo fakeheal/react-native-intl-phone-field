@@ -17,6 +17,7 @@ export type IntlPhoneFieldProps = {
   defaultFlag?: string;
   onEndEditing?: Function;
   onValidation?: Function;
+  onValueUpdate?: Function;
   containerStyle?: object;
   flagContainerStyle?: object;
   flagTextStyle?: object;
@@ -30,6 +31,7 @@ export default function IntlPhoneField({
   flagUndetermined = '❓',
   onEndEditing,
   onValidation,
+  onValueUpdate,
   defaultCountry,
   defaultPrefix,
   defaultValue,
@@ -107,6 +109,11 @@ export default function IntlPhoneField({
   useEffect(() => {
     onValidation && onValidation(isValid);
   }, [onValidation, isValid]);
+
+  useEffect(() => {
+    onValueUpdate && onValueUpdate(value);
+  }, [value]);
+
   return (
     <View style={[styles.container, containerStyle]}>
       <View style={[styles.flag, flagContainerStyle]}>

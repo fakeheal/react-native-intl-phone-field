@@ -10,6 +10,7 @@ import {
   View,
   Pressable,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 import IntlPhoneField from 'react-native-intl-phone-field';
 
@@ -23,6 +24,7 @@ export default function App() {
   const [defaultCountry, setDefaultCountry] = useState(DEFAULT_STATE);
   const [filled, setFilled] = useState(DEFAULT_STATE);
   const [realTimeValidation, setRealTimeValidation] = useState(false);
+  const [trackingValue, setTrackingValue] = useState('');
 
   const onEndEditingMinimal = useCallback(
     ({isValid, countryCode, value, formatted, flag}) => {
@@ -78,83 +80,103 @@ export default function App() {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <StatusBar barStyle="dark-content" />
-      <Pressable onPress={() => Keyboard.dismiss()} style={{flex: 1}}>
-        <KeyboardAvoidingView style={{flex: 1}}>
-          <View style={styles.container}>
-            <View style={styles.example}>
-              <Text style={styles.exampleTitle}>Minimal</Text>
-              <IntlPhoneField onEndEditing={onEndEditingMinimal} />
-              <View style={styles.output}>
-                <View style={styles.outputRow}>
-                  <Text style={styles.outputLabel}>Valid?</Text>
-                  <Text style={styles.outputText}>
-                    {minimal.isValid ? 'Valid' : 'Invalid'}
-                  </Text>
+      <ScrollView>
+        <Pressable onPress={() => Keyboard.dismiss()} style={{flex: 1}}>
+          <KeyboardAvoidingView style={{flex: 1}}>
+            <View style={styles.container}>
+              <View style={styles.example}>
+                <Text style={styles.exampleTitle}>Minimal</Text>
+                <IntlPhoneField onEndEditing={onEndEditingMinimal} />
+                <View style={styles.output}>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Valid?</Text>
+                    <Text style={styles.outputText}>
+                      {minimal.isValid ? 'Valid' : 'Invalid'}
+                    </Text>
+                  </View>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Country Code</Text>
+                    <Text style={styles.outputText}>
+                      {minimal.countryCode ? minimal.countryCode : 'Undefined'}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.outputRow}>
-                  <Text style={styles.outputLabel}>Country Code</Text>
-                  <Text style={styles.outputText}>
-                    {minimal.countryCode ? minimal.countryCode : 'Undefined'}
-                  </Text>
+              </View>
+              <View style={styles.example}>
+                <Text style={styles.exampleTitle}>
+                  Default Country + Prefix
+                </Text>
+                <IntlPhoneField
+                  onEndEditing={onEndEditingDefaultCountry}
+                  defaultCountry="BG"
+                  defaultPrefix="+359"
+                  defaultFlag="🇧🇬"
+                />
+                <View style={styles.output}>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Valid?</Text>
+                    <Text style={styles.outputText}>
+                      {defaultCountry.isValid ? 'Valid' : 'Invalid'}
+                    </Text>
+                  </View>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Country Code</Text>
+                    <Text style={styles.outputText}>
+                      {defaultCountry.countryCode
+                        ? defaultCountry.countryCode
+                        : 'Undefined'}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.example}>
+                <Text style={styles.exampleTitle}>Filled + Styles</Text>
+                <IntlPhoneField
+                  onEndEditing={onEndEditingFilled}
+                  onValidation={onValidationFilled}
+                  defaultValue="+359 88 888 8888"
+                  defaultCountry="BG"
+                  defaultPrefix="+359"
+                  defaultFlag="🇧🇬"
+                  containerStyle={
+                    realTimeValidation ? styles.valid : styles.invalid
+                  }
+                />
+                <View style={styles.output}>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Valid?</Text>
+                    <Text style={styles.outputText}>
+                      {filled.isValid ? 'Valid' : 'Invalid'}
+                    </Text>
+                  </View>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Country Code</Text>
+                    <Text style={styles.outputText}>
+                      {filled.countryCode ? filled.countryCode : 'Undefined'}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.example}>
+                <Text style={styles.exampleTitle}>Tracking Value</Text>
+                <IntlPhoneField
+                  defaultValue={trackingValue}
+                  onValueUpdate={setTrackingValue}
+                  onEndEditing={result => {
+                    setTrackingValue(result.formatted);
+                  }}
+                />
+                <View style={styles.output}>
+                  <View style={styles.outputRow}>
+                    <Text style={styles.outputLabel}>Tracking Value:</Text>
+                    <Text style={styles.outputText}>{trackingValue}</Text>
+                  </View>
                 </View>
               </View>
             </View>
-            <View style={styles.example}>
-              <Text style={styles.exampleTitle}>Default Country + Prefix</Text>
-              <IntlPhoneField
-                onEndEditing={onEndEditingDefaultCountry}
-                defaultCountry="BG"
-                defaultPrefix="+359"
-                defaultFlag="🇧🇬"
-              />
-              <View style={styles.output}>
-                <View style={styles.outputRow}>
-                  <Text style={styles.outputLabel}>Valid?</Text>
-                  <Text style={styles.outputText}>
-                    {defaultCountry.isValid ? 'Valid' : 'Invalid'}
-                  </Text>
-                </View>
-                <View style={styles.outputRow}>
-                  <Text style={styles.outputLabel}>Country Code</Text>
-                  <Text style={styles.outputText}>
-                    {defaultCountry.countryCode
-                      ? defaultCountry.countryCode
-                      : 'Undefined'}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.example}>
-              <Text style={styles.exampleTitle}>Filled + Styles</Text>
-              <IntlPhoneField
-                onEndEditing={onEndEditingFilled}
-                onValidation={onValidationFilled}
-                defaultValue="+359 88 888 8888"
-                defaultCountry="BG"
-                defaultPrefix="+359"
-                defaultFlag="🇧🇬"
-                containerStyle={
-                  realTimeValidation ? styles.valid : styles.invalid
-                }
-              />
-              <View style={styles.output}>
-                <View style={styles.outputRow}>
-                  <Text style={styles.outputLabel}>Valid?</Text>
-                  <Text style={styles.outputText}>
-                    {filled.isValid ? 'Valid' : 'Invalid'}
-                  </Text>
-                </View>
-                <View style={styles.outputRow}>
-                  <Text style={styles.outputLabel}>Country Code</Text>
-                  <Text style={styles.outputText}>
-                    {filled.countryCode ? filled.countryCode : 'Undefined'}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        </KeyboardAvoidingView>
-      </Pressable>
+          </KeyboardAvoidingView>
+        </Pressable>
+      </ScrollView>
     </SafeAreaView>
   );
 }
